@@ -1,16 +1,18 @@
-
 const { Comment } = require('../models');
+
 async function getCommentTree(postId) {
     const comments = await Comment.findAll({
-        where: { postId: postId },
+        where: { post_id: postId },
         order: [['created_at', 'ASC']],
         raw: true
     });
+
     const commentMap = new Map();
     comments.forEach(comment => {
         comment.replies = [];
         commentMap.set(comment.id, comment);
     });
+
     const commentTree = [];
     comments.forEach(comment => {
         if (comment.parent_comment_id) {
@@ -25,6 +27,7 @@ async function getCommentTree(postId) {
 
     return commentTree;
 }
+
 function calculateMaxDepth(commentNode) {
     if (!commentNode.replies || commentNode.replies.length === 0) {
         return 1;
@@ -32,20 +35,22 @@ function calculateMaxDepth(commentNode) {
     const childDepths = commentNode.replies.map(calculateMaxDepth);
     return 1 + Math.max(...childDepths);
 }
+
 async function analyzeComments(postId) {
     const commentTree = await getCommentTree(postId);
 
     const analysis = commentTree.map(rootComment => {
-        const maxDepth = calculateMaxDepth(rootComment);
         return {
             commentId: rootComment.id,
             content: rootComment.content,
             engagementScore: {
-                maxDepth: maxDepth
+                maxDepth: calculateMaxDepth(rootComment)
             }
         };
     });
 
     return analysis;
 }
+
 module.exports = { analyzeComments };
+

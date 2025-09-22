@@ -1,4 +1,4 @@
-const { DataTypes} = require('sequelize');
+const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
 const Post = sequelize.define('Post', {
@@ -9,7 +9,8 @@ const Post = sequelize.define('Post', {
 }, {
     tableName: 'posts',
     timestamps: true,
-    createdAt: 'created_at'
+    createdAt: 'created_at',
+    updatedAt: false
 });
 
 module.exports = Post;

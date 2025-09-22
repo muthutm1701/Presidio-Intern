@@ -1,17 +1,16 @@
-
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
-const Hashtag = sequelize.define('Hashtag', {
-    tagName: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-        field: 'tag_name' 
+const Comment = sequelize.define('Comment', {
+    content: {
+        type: DataTypes.TEXT,
+        allowNull: false
     }
 }, {
-    tableName: 'hashtags',
-    timestamps: false 
+    tableName: 'comments',
+    timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: false
 });
 
-module.exports = Hashtag;
+module.exports = Comment;

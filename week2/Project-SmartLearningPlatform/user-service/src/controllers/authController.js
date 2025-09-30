@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
+const logger = require('../config/logger'); 
 
 const generateToken = (id, role) => {
     return jwt.sign({ id, role }, process.env.JWT_SECRET, {
@@ -12,6 +13,7 @@ exports.registerUser = async (req, res) => {
     try {
         const userExists = await User.findOne({ email });
         if (userExists) {
+            logger.warn(`Registration failed: User already exists for email ${email}`);
             return res.status(400).json({ message: 'User already exists' });
         }
         const user = await User.create({ username, email, password, role });
@@ -23,6 +25,7 @@ exports.registerUser = async (req, res) => {
             token: generateToken(user._id, user.role),
         });
     } catch (error) {
+        logger.error(`Server Error during registration: ${error.message}`);
         res.status(500).json({ message: 'server Error', error: error.message });
     }
 };
@@ -44,6 +47,7 @@ exports.loginUser = async (req, res) => {
             res.status(401).json({ message: 'Invalid email or password' });
         }
     } catch (error) {
+         logger.warn(`Login failed for email ${email}: Invalid credentials`);
         res.status(500).json({ message: 'Server Error', error: error.message });
     }
 };
@@ -56,6 +60,7 @@ exports.getUserProfile = async (req, res) => {
             res.status(404).json({ message: 'User not found' });
         }
     } catch (error) {
+         logger.error(`Server Error during login: ${error.message}`);
         res.status(500).json({ message: 'Server Error' });
     }
 };

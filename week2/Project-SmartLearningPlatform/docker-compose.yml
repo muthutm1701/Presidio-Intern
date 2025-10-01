@@ -1,0 +1,34 @@
+version: '3.8'
+services:
+  mongo:
+    image: mongo
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - mongo-data:/data/db
+
+  user-service:
+    build: ./user-service
+    ports:
+      - '3000:3000'
+    env_file:
+      - ./user-service/.env
+    depends_on:
+      - mongo
+
+  course-service:
+    build: ./course-service
+    ports:
+      - '4000:4000'
+    env_file:
+      - ./course-service/.env
+    depends_on:
+      - mongo
+      - user-service
+
+volumes:
+  mongo-data:
+

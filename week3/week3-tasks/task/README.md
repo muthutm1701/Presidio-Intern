@@ -30,6 +30,19 @@ Use try...catch: Always use try...catch inside event handlers and asynchronous f
     componentDidUpdate
 
 - UNMOUNT
-
     ComponentWillUnmount
+
+# Responsive Design Checklist
+
+-  Use **relative units** (`%`, `rem`, `vw`, `vh`) instead of fixed pixels.  
+- Add **media queries** for breakpoints (mobile → tablet → desktop).  
+-  Make **images & videos flexible** (`max-width: 100%`, `height: auto`).  
+-  Use **responsive typography** (scale font-size with `clamp()`, `em`, `rem`).  
+-  Ensure **touch-friendly buttons** (minimum `44x44px`, enough spacing).  
+-  Build **responsive navigation** (hamburger menu or collapsible nav).  
+-  Use **CSS Grid / Flexbox** for fluid layouts.  
+-  Make **forms adapt** (stack inputs, use 100% width on mobile).  
+-  Add `<meta name="viewport" content="width=device-width, initial-scale=1.0">`.  
+  
+
 

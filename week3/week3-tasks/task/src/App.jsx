@@ -3,6 +3,7 @@ import { useState } from 'react'
 import './App.css'
 import Parent from './ReRenderTask'
 import { useEffect } from 'react'
+import UserClass from './Classbased Component/userClass';
 
 function App() {
   const [data1,setData ]=useState();
@@ -25,6 +26,7 @@ function App() {
     <>
      {/* <Parent/> */} 
     <div>{data1 ? `Welcome, ${data1.userId}` : 'Loading...'}</div>
+    <UserClass name="Muthuuuu" />
 
      
 

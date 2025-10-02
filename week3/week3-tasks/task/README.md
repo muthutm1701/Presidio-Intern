@@ -16,3 +16,20 @@ Be Specific: Add more ErrorBoundary components around specific, complex, or thir
 
 Use try...catch: Always use try...catch inside event handlers and asynchronous functions for predictable error handling.
 
+## React life cycle 
+- MOUNTING
+
+    Constructor (dummy)
+    Render (dummy)
+    Component Did Mount
+    this.setState -> State variable is updated
+
+- UPDATE
+
+    render(API data)
+    componentDidUpdate
+
+- UNMOUNT
+
+    ComponentWillUnmount
+

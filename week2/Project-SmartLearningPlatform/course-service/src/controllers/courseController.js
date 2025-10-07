@@ -1,5 +1,16 @@
 const Course = require('../models/Course');
 const axios = require('axios');
+exports.getMyEnrolledCourses = async (req, res) => {
+    try {
+ 
+        const studentId = req.user.id;
+        const courses = await Course.find({ enrolledStudentIds: studentId });
+        res.json(courses);
+    } catch (error) {
+   
+        res.status(500).json({ message: 'Server Error', error: error.message });
+    }
+};
 exports.createCourse = async (req, res) => {
     try {
         const { title, description, category } = req.body;

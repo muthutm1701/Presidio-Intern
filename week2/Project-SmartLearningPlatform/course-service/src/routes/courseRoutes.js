@@ -5,10 +5,12 @@ const {
     getAllCourses, 
     getCourseDetails,
     updateCourse,
-    enrollInCourse
+    enrollInCourse,
+    getMyEnrolledCourses
 } = require('../controllers/courseController');
 const { protect, authorize } = require('../middleware/authMiddleware');
 router.get('/', getAllCourses); 
+router.get('/my-courses', protect, authorize('student'), getMyEnrolledCourses);
 router.get('/:id', getCourseDetails);
 router.post('/', protect, authorize('teacher'), createCourse); 
 router.put('/:id', protect, authorize('teacher'), updateCourse); 
